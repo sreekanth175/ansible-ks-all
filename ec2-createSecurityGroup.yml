@@ -1,0 +1,23 @@
+# install "pip install --user boto3 botocore" before you write the below code
+
+# creating a new security group in us-west-2 region
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+
+  tasks:
+    - name: create a security group in us-east-2
+      ec2_group:
+        name: rangasg # New Security group name
+        description: an example ec2 security group
+        region: us-west-2 # region you want to create the secutity gp
+        aws_access_key: "XXXXXXXXX"
+        aws_secret_key: "KGKJGKJGKKHKJHKJH"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: security_group

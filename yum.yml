@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: this is my simple command checks
+      yum: name=nc state=installed

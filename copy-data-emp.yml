@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Copying a file of employee data from master to slave
+      copy: src=/tmp/emp-data.txt dest=/tmp/
+

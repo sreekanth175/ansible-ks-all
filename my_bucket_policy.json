@@ -1,0 +1,17 @@
+{
+  "Id": "Policyxxx",
+  "Statement": [
+    {
+      "Action": [
+        "s3:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::myexample-ansible-bucket99/*",
+      "Principal": {
+        "AWS": [
+          "*"
+        ]
+      }
+    }
+  ]
+}

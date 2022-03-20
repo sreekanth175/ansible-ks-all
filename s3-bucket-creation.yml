@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  gather_facts: False
+  vars:
+      s3_bucket_name: myexample-ansible-bucket99
+      aws_regio: us-west-2
+      aws_access_key: AKIA4Xadfgdoahfaohdoho
+      aws_secret_key: Vpkdadlhflkhlhafdahohlhloh
+  tasks:
+  - name: Create s3 bucket
+    s3_bucket:
+      name: "{{s3_bucket_name}}"
+      versioning: yes
+      aws_access_key: "{{aws_access_key}}"
+      aws_secret_key: "{{aws_secret_key}}"
+      policy: "{{ lookup( 'file','my_bucket_policy.json' )}}"
+      state: present
+      region: "{{aws_regio}}"
+      tags:
+         name: myansiblebucket_example
+         type: text

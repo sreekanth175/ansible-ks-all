@@ -1,0 +1,9 @@
+# copywarfile.yml
+---
+- hosts: all 
+  become: true
+  tasks: 
+    - name: copy jar/war onto tomcat servers
+      copy:
+          src: /home/jenkins/workspace/mvn_s3_artifact-job/gameoflife-web/target/gameoflife.war
+          dest: /usr/share/tomcat/webapps

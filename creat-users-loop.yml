@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: add several users
+      user:
+        name: "{{ item }}"
+        state: present
+        groups: "classgroup"
+      with_items:
+        - shiva
+        - surya
+        - kiran

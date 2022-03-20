@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  gather_facts: False
+  vars:
+      s3_bucket_name: myexample-ansible-bucket99
+      aws_region: us-west-2
+      aws_access_key: AKIA4X2lhjlhjohoihojoiho
+      aws_secret_key: VpkQShiouhKHYOIUGHJGgOIHGO
+  tasks:
+  - name: Create s3 bucket
+    s3_bucket:
+      name: "{{s3_bucket_name}}"
+      aws_access_key: "{{aws_access_key}}"
+      aws_secret_key: "{{aws_secret_key}}"
+      state: absent
+      force: yes
+      region: "{{aws_region}}"

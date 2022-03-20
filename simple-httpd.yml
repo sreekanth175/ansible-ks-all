@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+
+  tasks:
+          - hosts: webserver
+  tasks:
+    - name: Installing Httpd
+      yum: name=httpd state=latest
+
+          # - name: this my simple testing for yum module
+          # yum: name:httpd state=present
+
+          #- name: checking the status of installation httpd package  
+     # service: name=httpd state=started enable=true

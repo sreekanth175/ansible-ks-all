@@ -1,0 +1,51 @@
+---
+- hosts: all
+  tasks:
+    - name: Make sure that we can connect to the machine
+      ping:
+
+    - name: add group "tomcat"
+      group: name=tomcat
+
+    - name: add user "tomcat"
+      user: name=tomcat group=tomcat createhome=yes
+      become: true
+
+    - name: downloading tomcat 8.5
+      get_url: url=https://downloads.apache.org/tomcat/tomcat-8/v8.5.71/bin/apache-tomcat-8.5.71.tar.gz dest=/tmp/ mode=0755
+      become: true
+
+    - name: just checking the download remote tomcat files
+      command: "ls -lrt /tmp/"
+      become: true
+
+    - name: copy Tomcat
+    # Please make sure that you must fist copy this tomcat.tar zip file then follow the as its
+      copy: src=/tmp/apache-tomcat-8.5.71.tar.gz dest=/opt/apache-tomcat-8.5.71.tar.gz
+      become: true
+
+    - name: Extract Tomcat archive
+      command: tar -zxvf /opt/apache-tomcat-8.5.71.tar.gz -C /opt/ creates=/opt/apache-tomcat-8.5.71
+      become: true
+
+    - name: Change ownership of Tomcat installation
+      file: path=/opt/apache-tomcat-8.5.71 owner=tomcat group=tomcat state=directory recurse=yes
+      become: true
+
+    - name: Configure Tomcat users
+      template: src=/etc/ansible/playbooks/tomcat-users.xml dest=/opt/apache-tomcat-8.5.71/conf/
+      become: true
+
+    - name: Stop Tomcat
+      command: nohup /opt/apache-tomcat-8.5.71/bin/shutdown.sh
+      become: true
+      become_user: tomcat
+
+    - name: Start Tomcat
+      command: nohup /opt/apache-tomcat-8.5.71/bin/startup.sh
+      become: true
+      become_user: tomcat
+
+#    - name: wait for tomcat to start
+ #     wait_for: port={{http_port}}
+  #    become: true

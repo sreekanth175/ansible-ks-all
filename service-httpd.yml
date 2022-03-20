@@ -1,0 +1,8 @@
+---
+- hosts: webserver 
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: just checking status 
+      service: name=httpd state=restarted

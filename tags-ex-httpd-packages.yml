@@ -1,0 +1,20 @@
+---
+#https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html
+- hosts: all
+  gather_facts: no
+
+  tasks:
+  - yum:
+      name:
+      - httpd
+      - java
+      - memcached
+      state: present
+    tags:
+    - packages
+
+  - template:
+       src: ./src.j2
+       dest: /etc/foo.conf
+    tags:
+     - configuration

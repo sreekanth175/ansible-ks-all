@@ -1,0 +1,29 @@
+---
+- name: Create a new Demo EC2 instance
+  hosts: all
+  gather_facts: False
+
+  vars:
+      region: us-west-2
+      instance_type: t2.nano
+      ami: ami-061392db613a6357b # Amazon AMI  16.04 LTS
+      keypair: KS-Oregon-Class-Key # pem file name
+
+  tasks:
+
+    - name: Create an ec2 instance
+      ec2:
+         key_name: "{{ keypair }}" # existing key pem file name which is there in console
+         group: My-Custom-VPC-SG  # existing security group name which has been created in AWS console
+         instance_type: "{{ instance_type}}" # you need to choose instance type that you launch
+         image: "{{ ami }}" # you need to choose any AMI id from AWS launchboard
+         wait: true
+         region: "{{ region }}" # specific region what you specified during the aws configure (ex:us-west-2)
+         count: 1  # default if you want to launch more than 1 Ec2 you can give still 2 or 3 ,etc
+         count_tag:
+            Name: Ansible-EC2-Demo
+         instance_tags:
+            Name: Ansible-EC2-Demo
+         vpc_subnet_id: subnet-091ce7b7d16b6be69 # please choose the subnet Id from AWS VPC dashboard
+         assign_public_ip: yes
+      register: ec2

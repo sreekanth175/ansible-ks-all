@@ -1,0 +1,10 @@
+---  
+- hosts: all
+  user: ansadm 
+  become: yes
+  become_method: sudo
+  tasks:
+       - name: intall httpd
+         yum: name=httpd state=present
+       - name: start httpd
+         service: name=httpd state=started

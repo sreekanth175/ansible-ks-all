@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - name: downloading tomcat 8.5
+      get_url: url=https://downloads.apache.org/tomcat/tomcat-8/v8.5.51/bin/apache-tomcat-8.5.51.tar.gz dest=/tmp/ mode=0755
+    - name: just checking the download remote tomcat files
+      command: "ls -lrt /tmp/"

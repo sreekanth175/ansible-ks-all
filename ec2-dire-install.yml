@@ -1,0 +1,29 @@
+---
+- name: Create a new Demo EC2 instance
+  hosts: localhost
+  gather_facts: False
+
+  vars:
+      region: us-west-2
+      instance_type: t2.micro
+      ami: ami-0ce21b51cb31a48b8  # Amazon AMI  16.04 LTS
+      keypair: KS-GroupAllKey # pem file name
+
+  tasks:
+
+    - name: Create an ec2 instance
+      ec2:
+         key_name: "{{ keypair }}"
+         group: MyVPC-192-SG # security group name
+         instance_type: "{{ instance_type}}"
+         image: "{{ ami }}"
+         wait: true
+         region: "{{ region }}"
+         count: 2  # default
+         count_tag:
+            Name: Ansible-EC2-New
+         instance_tags:
+            Name: Ansible-EC2-New
+         vpc_subnet_id: subnet-0ec8fd793e33ccfb3
+         assign_public_ip: yes
+      register: ec2
